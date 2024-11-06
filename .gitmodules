@@ -1,0 +1,3 @@
+[submodule "software/rocc-software"]
+	path = software/rocc-software
+	url = https://github.com/ibm/rocc-software

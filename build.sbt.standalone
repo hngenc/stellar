@@ -1,0 +1,32 @@
+// See README.md for license details.
+
+ThisBuild / scalaVersion     := "2.13.8"
+ThisBuild / version          := "0.1.0"
+ThisBuild / organization     := "com.github.hngenc"
+
+val chiselVersion = "3.5.4"
+
+lazy val root = (project in file("."))
+  .settings(
+    name := "stellar",
+    libraryDependencies ++= Seq(
+      "edu.berkeley.cs" %% "chisel3" % chiselVersion,
+      "edu.berkeley.cs" %% "chiseltest" % "0.5.4" % "test",
+      "com.github.simerplaha" %% "slack3d" % "0.1.0",
+    ),
+    scalacOptions ++= Seq(
+      "-language:reflectiveCalls",
+      "-language:postfixOps",
+      // "-deprecation",
+      // "-feature",
+      // "-Xcheckinit",
+      // "-Xfatal-warnings",
+      // "-Wconf:cat=deprecation:ws,any:e",
+    ),
+    addCompilerPlugin("edu.berkeley.cs" % "chisel3-plugin" % chiselVersion cross CrossVersion.full),
+
+    fork in run := true,
+    javaOptions in run ++= Seq(
+      "-XstartOnFirstThread",
+    ),
+  )

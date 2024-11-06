@@ -1,0 +1,11 @@
+*~
+*#
+build
+autom4te.cache
+configure
+.ipynb_checkpoints
+*/*_params.h
+*/*_params.c
+*.tar.gz
+*/*.mtx
+matrices/

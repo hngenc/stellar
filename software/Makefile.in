@@ -1,0 +1,28 @@
+prefix		:= @prefix@
+abs_top_srcdir	:= @abs_top_srcdir@
+XLEN            := @XLEN@
+RISCVTOOLS      := @RISCVTOOLS@
+ROCC = examples
+
+.PHONY: all clean small large resnet50 alexnet sparsesuite sparch
+all: small large resnet50 alexnet sparsesuite sparch
+
+vars = \
+	abs_top_srcdir=$(abs_top_srcdir) \
+	XLEN=$(XLEN) \
+	PREFIX=$(ROCC)-$@ \
+	src_dir=$(abs_top_srcdir)/$@ \
+	RISCVTOOLS=$(RISCVTOOLS)
+
+small large resnet50 alexnet sparsesuite sparch:
+	mkdir -p $@
+	$(MAKE) -C $@ -f $(abs_top_srcdir)/$@/Makefile $(vars)
+
+clean:
+	$(MAKE) -C small -f $(abs_top_srcdir)/small/Makefile abs_top_srcdir=$(abs_top_srcdir) PREFIX=$(ROCC)-small clean
+	$(MAKE) -C large -f $(abs_top_srcdir)/large/Makefile abs_top_srcdir=$(abs_top_srcdir) PREFIX=$(ROCC)-large clean
+	$(MAKE) -C resnet50 -f $(abs_top_srcdir)/resnet50/Makefile abs_top_srcdir=$(abs_top_srcdir) PREFIX=$(ROCC)-resnet50 clean
+	$(MAKE) -C alexnet -f $(abs_top_srcdir)/alexnet/Makefile abs_top_srcdir=$(abs_top_srcdir) PREFIX=$(ROCC)-alexnet clean
+	$(MAKE) -C sparsesuite -f $(abs_top_srcdir)/sparsesuite/Makefile abs_top_srcdir=$(abs_top_srcdir) PREFIX=$(ROCC)-sparsesuite clean
+	$(MAKE) -C sparch -f $(abs_top_srcdir)/sparch/Makefile abs_top_srcdir=$(abs_top_srcdir) PREFIX=$(ROCC)-sparch clean
+
